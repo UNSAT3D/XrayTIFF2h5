@@ -17,5 +17,5 @@ We'll use this repository to:
 ### Manually
 
 1. Copy or clone this repository in the location you want to store your local copy of the data.
-2. Save the dataset [X-ray Computed Tomography Reconstructions of Partially Saturated Vegetated Sand](https://doi.org/10.4121/21294510.v1) inside the `xray` folder. Uncompress if necessary.
-3. Save the dataset [Phase field data generated from coupled Lattice Boltzmann-discrete element simulations](https://doi.org/10.4121/21272874.v1) inside the `phas` folder. Uncompress if necessary.
+2. Save the dataset [X-ray Computed Tomography Reconstructions of Partially Saturated Vegetated Sand](https://doi.org/10.4121/21294510.v1) inside the `exp` folder. Uncompress if necessary.
+3. Save the dataset [Phase field data generated from coupled Lattice Boltzmann-discrete element simulations](https://doi.org/10.4121/21272874.v1) inside the `sim` folder. Uncompress if necessary.
