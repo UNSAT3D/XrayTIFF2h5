@@ -14,6 +14,12 @@ We'll use this repository to:
 2. Open a console.
 3. Run `make`.
 
+### Using `snakemake`
+
+1. Copy or clone this repository in the location you want to store your local copy of the data.
+2. Open a console.
+3. Run `snakemake -j 1`.
+
 ### Manually
 
 1. Copy or clone this repository in the location you want to store your local copy of the data.

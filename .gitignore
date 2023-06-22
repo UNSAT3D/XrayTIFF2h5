@@ -1,2 +1,4 @@
 sim/
 exp/
+poetry.lock
+.snakemake/
