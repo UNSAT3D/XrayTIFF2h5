@@ -14,7 +14,7 @@ exp_table = {
     "exp/README.txt" : "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/f0f8b41c-cee3-4fe1-a34d-f0e803060079",
     "exp/CoarseSand_Day2Growth.tif" : "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/d2cffe40-61af-434b-8e57-874a7e1e3f52",
     "exp/CoarseSand_Day6Growth.tif" : "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/ec91538f-b005-4fae-adb5-3e2372169ff3",
-    "exp/FineSand_Day2Growth.tif" : "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/aa7741b3-85ec-47d3-89e0-79e08828ea60",
+    "exp/FineSand_Day2Growth.tif" : "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/9ae1848e-2612-470f-a6ad-bc9da4f94a59",
     "exp/FineSand_Day6Growth.tif" : "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/fb171e68-03a1-4a60-b179-60634085f3d0",
 }
 

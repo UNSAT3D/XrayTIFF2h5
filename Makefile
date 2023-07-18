@@ -25,7 +25,7 @@ exp/CoarseSand_Day6Growth.tif:
 	wget -O $@ "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/ec91538f-b005-4fae-adb5-3e2372169ff3"
 
 exp/FineSand_Day2Growth.tif:
-	wget -O $@ "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/aa7741b3-85ec-47d3-89e0-79e08828ea60"
+	wget -O $@ "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/9ae1848e-2612-470f-a6ad-bc9da4f94a59"
 
 exp/FineSand_Day6Growth.tif:
 	wget -O $@ "https://data.4tu.nl/file/f249ac1c-9eed-49a8-8341-8be4bf4296b0/fb171e68-03a1-4a60-b179-60634085f3d0"
