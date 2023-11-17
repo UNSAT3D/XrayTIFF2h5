@@ -6,7 +6,7 @@ We'll use this repository to:
 2. Suggest a folder structure that will work well with the remaining modules, and automate its creation.
 3. Keep track of data-related issues.
 
-## Getting the data
+## The published data
 
 ### Using `make`
 
@@ -40,4 +40,49 @@ The resulting working folder should look like:
     ├── colour_output_t00250000-0285621391.h5
     ├── particle_configuration.dat
     └── README.md
+```
+
+## The full dataset
+
+The full dataset is, for now, only available on surfdrive.
+The format for the x-ray data is:
+
+```bash
+data
+├── coarse
+│   └───── loose
+│   │       └──── sample_id
+│   │               └──── day-01.tif
+│   │               └──── day-02.tif
+│   │               └──── ...
+│   └──── dense
+│           └──── sample_id
+│           └──── ...
+└── fine
+│   └──── loose
+│   │       └──── sample_id
+│   │       └──── ...
+    └──── dense
+│           └──── sample_id
+│           └──── ..
+```
+
+and the format for the labels is identical.
+
+Running the following
+```bash
+python tif_to_h5.py --data_path data --label_path labels --h5_path data.h5
+```
+will combine all the tif files into a single .h5 file, following again the same structure,
+except that now for each sample we have:
+```bash
+sample_id
+├── data
+│    └──── day-01
+│    └──── day-02
+│    └──── ...
+└── labels
+     └──── day-01
+     └──── day-02
+     └──── ...
 ```
