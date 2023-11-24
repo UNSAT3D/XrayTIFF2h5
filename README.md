@@ -86,3 +86,10 @@ sample_id
      └──── day-02
      └──── ...
 ```
+
+It also changes the class labels to:
+- 0: water
+- 1: outside of bounds of sample
+- 2: air
+- 3: root
+- 4: soil
