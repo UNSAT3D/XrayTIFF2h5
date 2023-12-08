@@ -5,6 +5,7 @@ import click
 import h5py
 import numpy as np
 import tifffile
+import tqdm
 
 
 def tif_to_numpy(tif_file: str) -> np.ndarray:
@@ -20,6 +21,8 @@ def tif_to_numpy(tif_file: str) -> np.ndarray:
 def tifs_to_h5(path: str, f: h5py.File, label: bool = False):
     """
     Convert all tif files in a directory to a single h5 file.
+
+
     """
     for root, dirs, files in os.walk(path):
         group_path = os.path.relpath(root, path)
@@ -28,18 +31,18 @@ def tifs_to_h5(path: str, f: h5py.File, label: bool = False):
         else:
             group = f.require_group(group_path.replace(os.sep, "/"))
 
-        for filename in files:
-            if filename.endswith(".tif"):
-                tif_path = os.path.join(root, filename)
-                print(f"Converting {tif_path} to numpy array...")
-                data = tif_to_numpy(tif_path)
-
+        # if we are at a leaf
+        if not dirs and files:
+            print(f"Converting {root} to h5")
+            data_days = []
+            for day in tqdm.tqdm(sorted(files)):
+                data = tif_to_numpy(os.path.join(root, day))
                 if label:
                     data = convert_labels(data)
-                    subgroup = group.require_group("labels")
-                else:
-                    subgroup = group.require_group("data")
-                subgroup.create_dataset(filename.replace('.tif', ''), data=data)
+                data_days.append(tif_to_numpy(os.path.join(root, day)))
+            data_days = np.stack(data_days, axis=0)
+
+            group.create_dataset("labels" if label else "data", data=data_days)
 
 
 def convert_labels(array: np.ndarray) -> np.ndarray:
@@ -70,10 +73,10 @@ def convert_labels(array: np.ndarray) -> np.ndarray:
     }
     value_map = {k: value_map[v] for k, v in value_map_mixed.items()} | value_map
 
-    for original, new in value_map.items():
-        array[array == original] = new
+    conditions = [array == label for label in value_map.keys()]
+    choices = [value_map[label] for label in value_map.keys()]
 
-    return array.astype(np.uint8)
+    return np.select(conditions, choices, default=array).astype(np.uint8)
 
 
 @click.command()

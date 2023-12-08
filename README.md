@@ -77,14 +77,8 @@ will combine all the tif files into a single .h5 file, following again the same 
 except that now for each sample we have:
 ```bash
 sample_id
-├── data
-│    └──── day-01
-│    └──── day-02
-│    └──── ...
-└── labels
-     └──── day-01
-     └──── day-02
-     └──── ...
+├── data (num_days, 1600, 650, 650), float16
+└── labels (num_days, 1600, 650, 650), float16
 ```
 
 It also changes the class labels to:
