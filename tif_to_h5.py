@@ -14,6 +14,7 @@ def tif_to_numpy(tif_file: str) -> np.ndarray:
     """
     with tifffile.TiffFile(tif_file) as tif:
         images = tif.asarray()
+        images = np.expand_dims(images, axis=-1)
 
     return images.astype(np.float16)
 
