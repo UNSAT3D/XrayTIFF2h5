@@ -8,7 +8,7 @@ import tifffile
 import tqdm
 
 
-def tif_to_numpy(tif_file: str) -> np.ndarray:
+def tif_to_numpy(tif_file: str, dtype) -> np.ndarray:
     """
     Convert tif file containing a 3D scan to a numpy array.
     """
@@ -16,14 +16,12 @@ def tif_to_numpy(tif_file: str) -> np.ndarray:
         images = tif.asarray()
         images = np.expand_dims(images, axis=-1)
 
-    return images.astype(np.float16)
+    return images.astype(dtype)
 
 
 def tifs_to_h5(path: str, f: h5py.File, label: bool = False):
     """
     Convert all tif files in a directory to a single h5 file.
-
-
     """
     for root, dirs, files in os.walk(path):
         group_path = os.path.relpath(root, path)
@@ -37,10 +35,10 @@ def tifs_to_h5(path: str, f: h5py.File, label: bool = False):
             print(f"Converting {root} to h5")
             data_days = []
             for day in tqdm.tqdm(sorted(files)):
-                data = tif_to_numpy(os.path.join(root, day))
+                data = tif_to_numpy(os.path.join(root, day), np.uint8 if label else np.float16)
                 if label:
                     data = convert_labels(data)
-                data_days.append(tif_to_numpy(os.path.join(root, day)))
+                data_days.append(data)
             data_days = np.stack(data_days, axis=0)
 
             group.create_dataset("labels" if label else "data", data=data_days)
@@ -74,10 +72,15 @@ def convert_labels(array: np.ndarray) -> np.ndarray:
     }
     value_map = {k: value_map[v] for k, v in value_map_mixed.items()} | value_map
 
-    conditions = [array == label for label in value_map.keys()]
-    choices = [value_map[label] for label in value_map.keys()]
+    converted_array = np.copy(array)
+    for k, v in value_map.items():
+        converted_array[array==k] = v
 
-    return np.select(conditions, choices, default=array).astype(np.uint8)
+    unique_results = set(np.unique(converted_array).tolist())
+    if unique_results - {0, 1, 2, 3, 4} != set():
+        raise ValueError(f"Labels are not correctly converted, found {unique_results}")
+
+    return converted_array
 
 
 @click.command()
