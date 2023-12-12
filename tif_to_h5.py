@@ -73,7 +73,7 @@ def convert_labels(array: np.ndarray) -> np.ndarray:
 
     # this already gives indices into CLASS_VALUES, so we can use it directly
     nearest_class = np.argmin(diffs, axis=1)
-    nearest_class = nearest_class.reshape(array.shape)
+    nearest_class = nearest_class.reshape(array.shape).astype(np.uint8)
 
     return nearest_class
 
