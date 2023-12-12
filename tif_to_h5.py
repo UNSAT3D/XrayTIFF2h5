@@ -8,7 +8,9 @@ import tifffile
 import tqdm
 
 
-def tif_to_numpy(tif_file: str, dtype) -> np.ndarray:
+DATA_MAX = 65535
+
+def tif_to_numpy(tif_file: str, label: bool) -> np.ndarray:
     """
     Convert tif file containing a 3D scan to a numpy array.
     """
@@ -16,7 +18,14 @@ def tif_to_numpy(tif_file: str, dtype) -> np.ndarray:
         images = tif.asarray()
         images = np.expand_dims(images, axis=-1)
 
-    return images.astype(dtype)
+    if not label:
+        images = images.astype(np.float32)
+        images = images / DATA_MAX
+        images = images.astype(np.float16)
+    else:
+        images = images.astype(np.uint8)
+
+    return images
 
 
 def tifs_to_h5(path: str, f: h5py.File, label: bool = False):
@@ -35,7 +44,10 @@ def tifs_to_h5(path: str, f: h5py.File, label: bool = False):
             print(f"Converting {root} to h5")
             data_days = []
             for day in tqdm.tqdm(sorted(files)):
-                data = tif_to_numpy(os.path.join(root, day), np.uint8 if label else np.float16)
+                if not day.endswith(".tif"):
+                    continue
+
+                data = tif_to_numpy(os.path.join(root, day), label)
                 if label:
                     data = convert_labels(data)
                 data_days.append(data)
