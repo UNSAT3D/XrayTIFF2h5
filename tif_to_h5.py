@@ -9,6 +9,8 @@ import tqdm
 
 
 DATA_MAX = 65535
+CLASS_VALUES = [0, 1, 85, 128, 255]
+
 
 def tif_to_numpy(tif_file: str, label: bool) -> np.ndarray:
     """
@@ -16,12 +18,12 @@ def tif_to_numpy(tif_file: str, label: bool) -> np.ndarray:
     """
     with tifffile.TiffFile(tif_file) as tif:
         images = tif.asarray()
-        images = np.expand_dims(images, axis=-1)
 
     if not label:
         images = images.astype(np.float32)
         images = images / DATA_MAX
         images = images.astype(np.float16)
+        images = np.expand_dims(images, axis=-1)
     else:
         images = images.astype(np.uint8)
 
@@ -43,7 +45,8 @@ def tifs_to_h5(path: str, f: h5py.File, label: bool = False):
         if not dirs and files:
             print(f"Converting {root} to h5")
             data_days = []
-            for day in tqdm.tqdm(sorted(files)):
+            files_per_day = sorted(files)
+            for day in tqdm.tqdm(files_per_day):
                 if not day.endswith(".tif"):
                     continue
 
@@ -58,41 +61,20 @@ def tifs_to_h5(path: str, f: h5py.File, label: bool = False):
 
 def convert_labels(array: np.ndarray) -> np.ndarray:
     """
-    Convert the labels according to:
+    Convert the labels to the nearest class value, then convert the labels according to:
         0   -> 0: Pixels referring to water
         1   -> 1: Outside the soil sample
         85  -> 2: Pixels referring to air
         128 -> 3: Pixels referring to the root system
-        255 -> 4: Pixels referring to soil grains
-
-    Before the conversion above, convert the "mixed" labels as:
-        2 -> 1
-        86, 87 -> 85
-        127, 129 -> 128
-        212, 213, 214 -> 255
+        255 -> 4: Pixels referring to soil
     """
-    value_map = {0: 0, 1: 1, 85: 2, 128: 3, 255: 4}
-    value_map_mixed = {
-        2: 1,
-        86: 85,
-        87: 85,
-        127: 128,
-        129: 128,
-        212: 255,
-        213: 255,
-        214: 255,
-    }
-    value_map = {k: value_map[v] for k, v in value_map_mixed.items()} | value_map
+    class_values = np.array(CLASS_VALUES).reshape(1, -1)
+    diffs = np.abs(array.reshape(-1, 1) - class_values)
 
-    converted_array = np.copy(array)
-    for k, v in value_map.items():
-        converted_array[array==k] = v
+    # this already gives indices into CLASS_VALUES, so we can use it directly
+    nearest_class = np.argmin(diffs, axis=1)
 
-    unique_results = set(np.unique(converted_array).tolist())
-    if unique_results - {0, 1, 2, 3, 4} != set():
-        raise ValueError(f"Labels are not correctly converted, found {unique_results}")
-
-    return converted_array
+    return nearest_class
 
 
 @click.command()
