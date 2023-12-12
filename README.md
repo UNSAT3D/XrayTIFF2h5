@@ -51,20 +51,14 @@ The format for the x-ray data is:
 data
 ├── coarse
 │   └───── loose
-│   │       └──── sample_id
-│   │               └──── day-01.tif
-│   │               └──── day-02.tif
-│   │               └──── ...
-│   └──── dense
-│           └──── sample_id
-│           └──── ...
+│           └──── day-01.tif
+│           └──── day-02.tif
+│           └──── ...
 └── fine
-│   └──── loose
-│   │       └──── sample_id
-│   │       └──── ...
-    └──── dense
-│           └──── sample_id
-│           └──── ..
+   ├──── loose
+   │       └──── ...
+   └──── dense
+           └──── ...
 ```
 
 and the format for the labels is identical.
