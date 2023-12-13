@@ -68,11 +68,34 @@ Running the following
 python tif_to_h5.py --data_path data --label_path labels --h5_path data.h5
 ```
 will combine all the tif files into a single .h5 file, following again the same structure,
-except that now for each sample we have:
+the full file being:
 ```bash
-sample_id
-├── data (num_days, 1600, 650, 650), float16
-└── labels (num_days, 1600, 650, 650), float16
+data.h5  (2 objects)
+├── chickpea  (2 objects)
+│   ├── coarse  (1 object)
+│   │   └── loose  (2 objects)
+│   │       ├── data  (9, 1600, 650, 650, 1), float16
+│   │       └── labels  (9, 1600, 650, 650), uint8
+│   └── fine  (2 objects)
+│       ├── dense  (2 objects)
+│       │   ├── data  (8, 1600, 650, 650, 1), float16
+│       │   └── labels  (8, 1600, 650, 650), uint8
+│       └── loose  (2 objects)
+│           ├── data  (8, 1600, 650, 650, 1), float16
+│           └── labels  (8, 1600, 650, 650), uint8
+└── maize  (2 objects)
+    ├── coarse  (1 object)
+    │   └── loose  (2 objects)
+    │       ├── data  (8, 1600, 650, 650, 1), float16
+    │       └── labels  (8, 1600, 650, 650), uint8
+    └── fine  (2 objects)
+        ├── dense  (2 objects)
+        │   ├── data  (8, 1600, 650, 650, 1), float16
+        │   └── labels  (8, 1600, 650, 650), uint8
+        └── loose  (2 objects)
+            ├── data  (9, 1600, 650, 650, 1), float16
+            └── labels  (8, 1600, 650, 650), uint8
+
 ```
 
 It also changes the class labels to:
@@ -81,3 +104,5 @@ It also changes the class labels to:
 - 2: air
 - 3: root
 - 4: soil
+
+And finally it normalizes the X-ray data to be between 0 and 1, by dividing by the global maximum.
