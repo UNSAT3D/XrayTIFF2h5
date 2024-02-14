@@ -23,7 +23,7 @@ def tif_to_numpy(tif_file: str, label: bool) -> np.ndarray:
         images = images.astype(np.float32)
         images = images / DATA_MAX
         images = images.astype(np.float16)
-        images = np.expand_dims(images, axis=-1)
+        images = np.expand_dims(images, axis=1)
     else:
         images = images.astype(np.uint8)
 
