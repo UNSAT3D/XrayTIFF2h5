@@ -74,26 +74,26 @@ data.h5  (2 objects)
 ├── chickpea  (2 objects)
 │   ├── coarse  (1 object)
 │   │   └── loose  (2 objects)
-│   │       ├── data  (9, 1600, 1, 650, 650), float16
+│   │       ├── data  (9, 1600, 650, 650), float16
 │   │       └── labels  (9, 1600, 650, 650), uint8
 │   └── fine  (2 objects)
 │       ├── dense  (2 objects)
-│       │   ├── data  (8, 1600, 1, 650, 650), float16
+│       │   ├── data  (8, 1600, 650, 650), float16
 │       │   └── labels  (8, 1600, 650, 650), uint8
 │       └── loose  (2 objects)
-│           ├── data  (8, 1600, 1, 650, 650), float16
+│           ├── data  (8, 1600, 650, 650), float16
 │           └── labels  (8, 1600, 650, 650), uint8
 └── maize  (2 objects)
     ├── coarse  (1 object)
     │   └── loose  (2 objects)
-    │       ├── data  (8, 1600, 1, 650, 650), float16
+    │       ├── data  (8, 1600, 650, 650), float16
     │       └── labels  (8, 1600, 650, 650), uint8
     └── fine  (2 objects)
         ├── dense  (2 objects)
-        │   ├── data  (8, 1600, 1, 650, 650), float16
+        │   ├── data  (8, 1600, 650, 650), float16
         │   └── labels  (8, 1600, 650, 650), uint8
         └── loose  (2 objects)
-            ├── data  (9, 1600, 1, 650, 650), float16
+            ├── data  (9, 1600, 650, 650), float16
             └── labels  (8, 1600, 650, 650), uint8
 
 ```
