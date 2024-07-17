@@ -1,9 +1,13 @@
-# Datasets
+![header](https://capsule-render.vercel.app/api?type=waving&height=300&color=0:1b4ccb,100:c5edf1&text=🩻X-rayTIFF%20to%20h5&fontColor=1c6399&stroke=000000&strokeWidth=1)
 
-We'll use this repository to:
+This repository provides a workflow to transform X-rays data originally stored in `.TIFF` format, into `.h5`. 
+Overall, this makes the data more compressed and easier to process in machine learning pipelines, such as [unsat](https://github.com/UNSAT3D/unsat).
+To get an overview of the expected structure of the data you can check: [X-ray Computed Tomography Reconstructions of Partially Saturated Vegetated Sand](https://doi.org/10.4121/21294510.v2).
+
+This repo will aim to the following objectives:
 
 1. Show the user how to get the data.
-2. Suggest a folder structure that will work well with the remaining modules, and automate its creation.
+2. Automate a folder structure creation such that it will work well with extra modules.
 3. Keep track of data-related issues.
 
 ## The published data
