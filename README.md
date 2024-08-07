@@ -110,3 +110,17 @@ It also changes the class labels to:
 - 4: soil
 
 And finally it normalizes the X-ray data to be between 0 and 1, by dividing by the global maximum.
+
+## Binary labels
+
+It is possible to reduce the complexity of the classification process by reducing the number of labels.
+In particular, for our specific soil analysis, the most interesting part is to identify roots. 
+Then, we can decide to process the data in order to have only two labels:
+- 0: non-root
+- 1: root
+
+To obtain the dataset for this binary classification you have to run: 
+```
+python binarize_h5.py full_data.h5 --chunk_size 100
+```
+Notice that `binarize_h5.py` modifies the `full_data.h5` in place, so it is wise to store a copy with all the labels to avoid re-running the full procedure to get all the labels.
